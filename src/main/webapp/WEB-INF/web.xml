@@ -7,8 +7,40 @@
     <servlet-name>HolaMundoServlet</servlet-name>
     <servlet-class>net.tecgurus.servlets.HolaMundoServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>HolaMundoServlet2</servlet-name>
+    <servlet-class>net.tecgurus.servlets.HolaMundoServlet2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>HolaMundoServlet3</servlet-name>
+    <servlet-class>net.tecgurus.servlets.HolaMundoServlet2</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CatalogoGeneralServlet</servlet-name>
+    <servlet-class>net.tecgurus.servlets.CatalogoGeneralServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>ClienteServlet</servlet-name>
+    <servlet-class>net.tecgurus.servlets.ClienteServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>HolaMundoServlet</servlet-name>
     <url-pattern>/HolaMundoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HolaMundoServlet2</servlet-name>
+    <url-pattern>/HolaMundoServlet2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HolaMundoServlet3</servlet-name>
+    <url-pattern>/HolaMundoServlet3</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CatalogoGeneralServlet</servlet-name>
+    <url-pattern>/cata</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClienteServlet</servlet-name>
+    <url-pattern>/cliente</url-pattern>
   </servlet-mapping>
 </web-app>
