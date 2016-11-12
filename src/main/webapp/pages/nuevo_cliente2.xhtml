@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head />
+<h:body>
+	<h:form>
+		<p:growl autoUpdate="true" />
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Nombre" for="input_nomb" />
+			<p:inputText value="#{cteCtrl.input_new_nomb}" required="true"
+				id="input_nomb" />
+			<p:outputLabel value="Apellido Paterno" for="input_apat" />
+			<p:inputText value="#{cteCtrl.input_new_aPat}" required="true"
+				id="input_apat" />
+			<p:outputLabel for="input_amat" value="Apellido Materno" />
+			<p:inputText value="#{cteCtrl.input_new_aMat}" id="input_amat" />
+			<p:outputLabel for="input_tel" value="Telefono" />
+			<p:inputText id="input_tel" value="#{cteCtrl.input_new_tel}" />
+			<p:outputLabel for="input_add" value="Direccion" />
+			<p:inputTextarea id="input_add" value="#{cteCtrl.input_new_dir}" />
+			<p:outputLabel for="input_edo" value="Estatus" />
+			<p:selectOneMenu value="#{cteCtrl.input_new_status}" id="input_edo" required="true">
+				<f:selectItem itemValue="1" itemLabel="Activo" />
+				<f:selectItem itemValue="2" itemLabel="Inactivo" />
+			</p:selectOneMenu>
+			<p:commandButton value="Aceptar" action="#{cteCtrl.addCliente}" />
+			<p:commandButton value="Cancelar"
+				action="#{cteCtrl.addClienteCancel}" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
