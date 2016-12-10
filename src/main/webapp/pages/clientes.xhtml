@@ -1,19 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
-<h:head />
 <h:body>
-	<h:form>
-		<p:dataTable value="#{cteCtrl.listItems}" var="cte" rowKey="#{cte.idCte}" >
-			<p:column headerText="Nombre" >
-				<h:outputText value="#{cte.nomCte}" />
-			</p:column>
-		</p:dataTable>
-	</h:form>
+	<ui:composition template="/WEB-INF/templates/template.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<p:growl id="growl" sticky="false" autoUpdate="true"
+					showDetail="true" />
+				<p:commandButton value="Alta de Cte." icon="ui-icon-plusthick"
+					onclick="PF('dlgNuevoCte').show();" />
+				<p:commandButton value="Editar" icon="ui-icon-pencil" update=":editForm:outputPanelEdit"
+					action="#{cteCtrl.validateEditSelection}"
+					onclick="PF('dlgEditCte').show();" />
+
+				<p:panel header="Clientes">
+					<p:dataTable value="#{cteCtrl.listItems}" var="c" id="table"
+						selection="#{cteCtrl.currentItem}" widgetVar="table"
+						rowKey="#{c.idCte}" rows="10" paginator="true" selectionMode="single"
+						currentPageReportTemplate="{startRecord} de {endRecord}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+						<!--  
+						<p:column selectionMode="single"
+							style="width:16px;text-align:center" />
+						-->
+						<p:column headerText="Nombre" filterBy="#{c.nomCte}"
+							sortBy="#{c.nomCte}">
+							<h:outputText value="#{c.nomCte}" styleClass="" />
+						</p:column>
+						<p:column headerText="Apellido P." filterBy="#{c.apePatCte}"
+							sortBy="#{c.apePatCte}">
+							<h:outputText value="#{c.apePatCte}" />
+						</p:column>
+						<p:column headerText="Apellido M." filterBy="#{c.apeMatCte}"
+							sortBy="#{c.apeMatCte}">
+							<h:outputText value="#{c.apeMatCte}" />
+						</p:column>
+						<p:column headerText="Telefono" filterMatchMode="contains"
+							filterBy="#{c.telCte}" sortBy="#{c.telCte}">
+							<h:outputText value="#{c.telCte}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+			<!-- Alta de cliente -->
+			<p:dialog widgetVar="dlgNuevoCte" id="dlgNuevoCte" modal="true">
+				<h:form>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="new_name_input" value="Nombre" />
+						<p:inputText id="new_name_input" value="#{cteCtrl.input_new_nomb}"
+							required="true" maxlength="15" />
+						<p:outputLabel for="new_name_lastname" value="Apellido P." />
+						<p:inputText id="new_name_lastname" maxlength="15"
+							value="#{cteCtrl.input_new_aPat}" required="true" />
+						<p:outputLabel for="new_name_lastname2" value="Apellido M." />
+						<p:inputText id="new_name_lastname2" maxlength="15"
+							value="#{cteCtrl.input_new_aMat}" />
+						<p:outputLabel for="input_new_tel" value="Telefono" />
+						<p:inputText id="input_new_tel" value="#{cteCtrl.input_new_tel}" />
+						<p:outputLabel for="input_new_dire" value="Direccion" />
+						<p:inputTextarea id="input_new_dire"
+							value="#{cteCtrl.input_new_dir}" maxlength="200" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar" action="#{cteCtrl.addCliente}"
+							update=":form:table"
+							oncomplete="handlRequest(xhr, status, args, 'dlgNuevoCte')" />
+						<p:commandButton value="Cancelar"
+							onclick="PF('dlgNuevoCte').hide();" immediate="true"
+							action="#{cteCtrl.addClienteCancel}" />
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+			<!-- Fin de alta de cliente -->
+			<!-- Edicion de cliente -->
+			<p:dialog widgetVar="dlgEditCte" id="dlgEditCte" modal="true">
+				<h:form id="editForm">
+					<p:outputPanel id="outputPanelEdit">
+						<h:panelGrid columns="3">
+							<p:outputLabel for="input_edit_name" value="Nombre" />
+							<p:inputText id="input_edit_name"
+								value="#{cteCtrl.input_edit_nomb}" />
+							<p:watermark value="#{cteCtrl.currentItem.nomCte}"
+								for="input_edit_name" />
+							<p:outputLabel for="input_edit_lastname1" value="Apellido P." />
+							<p:inputText id="input_edit_lastname1"
+								value="#{cteCtrl.input_edit_lastname1}" />
+							<p:watermark value="#{cteCtrl.currentItem.apePatCte}"
+								for="input_edit_lastname1" />
+							<p:outputLabel for="input_edit_lastname2" value="Apellido M." />
+							<p:inputText id="input_edit_lastname2"
+								value="#{cteCtrl.input_edit_lastname2}" />
+							<p:watermark value="#{cteCtrl.currentItem.apeMatCte}"
+								for="input_edit_lastname2" />
+							<p:outputLabel for="input_edit_phone" value="Telefono" />
+							<p:inputText id="input_edit_phone"
+								value="#{cteCtrl.input_edit_tel}" />
+							<p:watermark value="#{cteCtrl.currentItem.telCte}"
+								for="input_edit_phone" />
+							<p:outputLabel for="input_edit_dir" value="Direccion" />
+							<p:inputTextarea id="input_edit_dir"
+								value="#{cteCtrl.input_edit_dir}" />
+							<p:watermark value="#{cteCtrl.currentItem.dirCte}"
+								for="input_edit_dir" />
+						</h:panelGrid>
+					</p:outputPanel>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar" action="#{cteCtrl.onEditCliente}"
+							update=":form:table"
+							oncomplete="handlRequest(xhr, status, args, 'dlgEditCte')" />
+						<p:commandButton value="Cancelar"
+							onclick="PF('dlgEditCte').hide();"
+							action="#{cteCtrl.onEditClienteCancel}" immediate="true" />
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+			<!-- Fin de edicion de cliente -->
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

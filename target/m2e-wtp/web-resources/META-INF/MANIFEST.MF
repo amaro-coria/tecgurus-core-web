@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: jamaro
-Build-Jdk: 1.8.0_73
+Built-By: amaro
+Build-Jdk: 1.8.0_111
 Class-Path: primefaces-6.0.jar
 Created-By: Maven Integration for Eclipse
 
