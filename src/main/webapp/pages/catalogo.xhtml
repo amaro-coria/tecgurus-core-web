@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head />
+<h:body>
+	<h:form>
+		<p:dataTable value="#{catCtrl.itemsList}" var="cat" paginator="true" rows="5"
+			paginatorPosition="bottom" rowKey="#{cat.idCat}"
+			currentPageReportTemplate="{startRecord} de {endRecord}"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			<p:column headerText="Desc. Corta" filterBy="#{cat.dscCorCat}"
+				sortBy="#{cat.dscCorCat}" filterMatchMode="contains">
+				<h:outputText value="#{cat.dscCorCat}" />
+			</p:column>
+			<p:column headerText="Desc. Completa" filterBy="#{cat.dscComCat}"
+				sortBy="#{cat.dscComCat}">
+				<h:outputText value="#{cat.dscComCat}" />
+			</p:column>
+			<p:column headerText="Estatus">
+				<h:outputText value="#{cat.idCat == 1 ? 'Activo' : 'Inactivo'}" />
+			</p:column>
+			<p:column headerText="Fecha">
+				<h:outputText value="#{cat.fchCre}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>

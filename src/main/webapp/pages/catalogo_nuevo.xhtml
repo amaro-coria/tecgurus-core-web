@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head />
+<h:body>
+	<h:form>
+	<p:growl autoUpdate="true" />
+		 <h:panelGrid columns="2">
+		 	<p:outputLabel for="input_dscc" value="Descripcion completa"/>
+		 	<p:inputText required="true" id="input_dscc" value="#{catCtrl.input_new_desCompCata}" />
+		 	<p:outputLabel for="input_dscrt" value="Descripcion corta" />
+		 	<p:inputText id="input_dscrt" value="#{catCtrl.input_new_desCortCata}" />
+		 	<p:outputLabel for="input_fca" value="Fecha" />
+		 	<p:calendar id="input_fca" value="#{catCtrl.input_new_fcCrea}" />
+		 	<p:commandButton value="Guardar" action="#{catCtrl.saveCata}" />
+		 	<p:commandButton value="Cancelar" action="#{catCtrl.saveCataCancel}" immediate="true" />
+		 </h:panelGrid>
+	</h:form>
+</h:body>
+</html>
