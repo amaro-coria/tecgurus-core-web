@@ -7,28 +7,128 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head />
-<h:body>
-	<h:form>
-		<p:dataTable value="#{catCtrl.itemsList}" var="cat" paginator="true" rows="5"
-			paginatorPosition="bottom" rowKey="#{cat.idCat}"
-			currentPageReportTemplate="{startRecord} de {endRecord}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="5,10,15">
-			<p:column headerText="Desc. Corta" filterBy="#{cat.dscCorCat}"
-				sortBy="#{cat.dscCorCat}" filterMatchMode="contains">
-				<h:outputText value="#{cat.dscCorCat}" />
-			</p:column>
-			<p:column headerText="Desc. Completa" filterBy="#{cat.dscComCat}"
-				sortBy="#{cat.dscComCat}">
-				<h:outputText value="#{cat.dscComCat}" />
-			</p:column>
-			<p:column headerText="Estatus">
-				<h:outputText value="#{cat.idCat == 1 ? 'Activo' : 'Inactivo'}" />
-			</p:column>
-			<p:column headerText="Fecha">
-				<h:outputText value="#{cat.fchCre}" />
-			</p:column>
-		</p:dataTable>
+<body>
+	<h1>Pagina ABC de cat&aacute;logos</h1>
+	<h:form id="form">
+		<p:growl autoUpdate="true" />
+		<p:panel header="Datatable">
+			<p:commandButton value="Nuevo" icon="ui-icon-plusthick"
+				onclick="PF('newDlg').show();" />
+			<p:spacer width="5px" />
+			<p:commandButton value="Editar" icon="ui-icon-pencil" />
+			<p:spacer width="5px" />
+			<p:commandButton value="Borrar" icon="ui-icon-closethick" />
+			<p:spacer width="5px" />
+			<p:commandButton value="Detalle" icon="ui-icon-zoomin" />
+			<br />
+			<br />
+			<p:dataTable value="#{catalogoCtrl.listElements}" id="table"
+				var="cata" widgetVar="table">
+				<!-- Columna 1: Desc Corta -->
+				<p:column headerText="Desc. Corta" filterMatchMode="contains"
+					filterBy="#{cata.dscCorCat}" sortBy="#{cata.dscCorCat}">
+					<h:outputText value="#{cata.dscCorCat}" />
+				</p:column>
+				<!-- Columna 2: Desc completa -->
+				<p:column headerText="Desc. completa" filterMatchMode="contains"
+					filterBy="#{cata.dscComCat}" sortBy="#{cata.dscComCat}">
+					<h:outputText value="#{cata.dscComCat}" />
+				</p:column>
+				<!-- Columna 3: Fch creacion -->
+				<p:column headerText="Fecha creacion">
+					<h:outputText value="#{cata.fchCre}" />
+				</p:column>
+				<!-- Columna 4: Estatus -->
+				<p:column headerText="Estatus">
+					<h:outputText value="#{cata.idEstCat == 1 ? 'Activo' : 'Inactivo'}" />
+				</p:column>
+			</p:dataTable>
+			<br />
+		</p:panel>
 	</h:form>
-</h:body>
+
+	<!-- Inicio del panel de nuevo -->
+	<p:dialog id="newDlg" widgetVar="newDlg" modal="true">
+		<h:form id="newForm">
+			<p:outputPanel id="new_panel_grid">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Descripcion corta" for="input_dsc_cort" />
+					<p:inputText required="true" value="#{catalogoCtrl.descCorta}"
+						id="input_dsc_cort" />
+					<p:watermark value="Valor sugerido" for="input_dsc_cort" />
+
+					<p:outputLabel value="Descripcion completa" for="input_desc_comp" />
+					<p:inputText id="input_desc_comp" value="#{catalogoCtrl.descComp}" />
+					<p:message for="input_desc_comp" />
+
+					<p:outputLabel value="Fecha creacion" for="input_fch_crea" />
+					<p:calendar id="input_fch_crea" navigator="true" mask="dd-MM-yyyy"
+						value="#{catalogoCtrl.fchCrea}" />
+					<p:message for="input_fch_crea" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Guardar" action="#{catalogoCtrl.save}"
+						update=":form:table"
+						oncomplete="handlRequest(xhr, status, args, 'newDlg')" />
+					<p:commandButton value="Cancelar" onclick="PF('newDlg').hide();"
+						immediate="true" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:form>
+	</p:dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+ function handlRequest(xhr, status, args, pfid) {
+                                        if(args.validationFailed) {
+                                            PF(pfid).jq.effect("shake", {times:5}, 100);
+                                        }
+                                        else {
+                                            PF(pfid).hide();
+                                        }
+                                    }
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
